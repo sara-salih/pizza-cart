@@ -12,25 +12,79 @@
     </script>
 <style>
 body {
-        background-color: aqua;
+        background-color: snow;
     }
+    .pizzaTable {width: 50%;
+    }
+    .pizzaTable tr:nth-child(odd) {background-color: aliceblue;}
+    .pizzaTable tr:nth-child(even) {background-color:peachpuff;}
+    .livePicture { background-image:url("https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.istockphoto.com%2Fphotos%2Fconcept-promotional-flyer-and-poster-for-restaurants-or-pizzerias-picture-id943449226%3Fk%3D20%26m%3D943449226%26s%3D612x612%26w%3D0%26h%3D7MIJwKIN33mJqMzXbNUfj4LErNQ1oO_cXCZT3Utq7cw%3D&imgrefurl=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fpizza&tbnid=hqjYBLNebiOC0M&vet=10CCoQMyh6ahcKEwiQ6YypqeT5AhUAAAAAHQAAAAAQAw..i&docid=L_YY9OWBaDG7sM&w=612&h=308&q=pizza%20wallpaper&ved=0CCoQMyh6ahcKEwiQ6YypqeT5AhUAAAAAHQAAAAAQAw");
+    }
+    @media(min-width: 760px) {
+.featuredPizzas{  
+display: flex; 
+width: 50%;  
+}}
+.featuredSmall{
+border: 2px solid;
+padding: 1em;
+margin: 1em;
+border-radius: 1em;
+background-color: aliceblue;
+border-radius: 1em;
+flex: 1;
+}
+
+
+
+
+.featuredLarge{
+border: 2px solid;
+padding: 1em;
+margin: 1em;
+border-radius: 1em;
+background-color:aliceblue;
+border-radius: 1em;
+flex: 1;
+
+
+
+}
+
+.featuredMedium{
+border: 2px solid;
+padding: 1em;
+margin: 1em;
+border-radius: 1em;
+background-color: aliceblue;
+border-radius: 1em;
+flex: 1;
+
+}
 </style>
+
 </head>
 <body>
 <div class='primCont' x-data="pizzaCartWithAPIWidget">
+    <div class ="livePicture">
       <div x-text='message'></div>
-      <div>
+      <div x-text="cartId"></div>
+      
           <h2 class='header'><em>PIZZA MENU</em></h2>
           <div class='details'>
               <div class='customer'>
                   Customer name: <input type='text' placeholder='User name' x-model='username'>
               </div>
-              <div class='numP'> Number of pizzas available: <strong x-text='pizzas.length'></strong>
-              </div>
+              <div class='numP'> Number of pizzas available: <strong x-text='pizzas.length'></strong></div>
+              <video autoplay muted loop>
+              <source src="pizza pic.GIF.mp4" type="video/mp4"/></video>
+            
               <div class='tot'>
+            
                       Cart total: R <strong x-text="cart.total.toFixed(2)"></strong>
               </div>
           </div>
+        </div>
           <div class="cart">
               <div >
                   <table >
@@ -74,8 +128,45 @@ body {
               </div>
           </div>
           <br>
+          
+          <div class="featuredPizzas">
+            <div class="featuredSmall">
+            <div>
+                <td>
+                <strong x-text="smallPizza.flavour"></strong><br>
+                <img src="small.png" alt="">
+                <strong>small featured</strong>
+                    <div x-text="smallPizza.price"></div>
+                    
+                <div>
+                    <button @click="add(smallPizza)">buy</button>
+                </div>
+            </div>
+            </div>
+            <div class="featuredMedium">
+            <strong x-text="mediumPizza.flavour"></strong><br>
+            <img src="medium.png" alt="">
+            <strong>Medium featured</strong>
+                <div x-text="mediumPizza.price"></div>
+                <div>
+                    <button @click="add(mediumPizza)">buy</button>
+                </div>
+            </div>
+
+            <div class="featuredLarge">
+                <strong x-text="largePizza.flavour"></strong><br>
+                <img src="large.png" alt="">
+                <strong>Large featured</strong>
+                   <div x-text="largePizza.price"></div>
+                    
+                <div>
+                    <button @click="add(largePizza)">buy</button>
+                </div>
+            </div>
+        </div>
           <div class = 'listPizzas'>
-              <table >
+              <table class="pizzaTable">
+            
                   <template x-for="pizza in pizzas">
                       <tr>
                           <td>
@@ -91,6 +182,6 @@ body {
                   </template>
               </table>
           </div>
-      </div>
+      
 </body>
 </html>

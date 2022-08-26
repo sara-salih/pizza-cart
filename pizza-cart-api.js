@@ -10,6 +10,9 @@ document.addEventListener('alpine:init', () => {
                   .get('https://pizza-cart-api.herokuapp.com/api/pizzas')
                   .then((result) => {
                       this.pizzas = result.data.pizzas
+                      this.smallPizza = this.pizzas['8'];
+                      this.mediumPizza = this.pizzas[7];
+                      this.largePizza = this.pizzas[4];
                   })
                   .then(() => {
                       return this.createCart();
@@ -32,12 +35,16 @@ document.addEventListener('alpine:init', () => {
                   });
           },
           pizzaImage(pizza) {
-              return `./img/${pizza.size}.jpg`
+              return `/${pizza.size}.png`
           },
           message: '',
           username: 'Sara',
           pizzas: [],
           cartId: '',
+          smallPizza: [],
+          mediumPizza:[],
+          largePizza:[],
+        
           cart: { total: 0 },
           payNow: false,
           paymentAmount: 0,
@@ -51,10 +58,10 @@ document.addEventListener('alpine:init', () => {
               axios
                   .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/add', params)
                   .then(() => {
-                      this.message = alert("Pizza added to the cart!")
+                      this.message = "Pizza added to the cart!"
                       this.showCart();
                   })
-                  .catch(err => alert(err));
+                 
               //alert(pizza.id)
           },
           remove(pizza){
@@ -66,10 +73,10 @@ document.addEventListener('alpine:init', () => {
               axios
                 .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/remove', params)
                 .then(()=>{
-                  this.message= alert("Pizza removed from the cart")
+                  this.message= "Pizza removed from the cart"
                   this.showCart();
                 })
-                .catch(err=>alert(err));
+                
             },
             pay(pizza){
               const params = {
@@ -81,12 +88,10 @@ document.addEventListener('alpine:init', () => {
                     if(!this.paymentAmount){
                         this.paymentMessage = 'No amount entered!'
                     }
-                    else if(this.paymentAmount >= this.cart.total.toFixed(2)){
+                    else if(this.paymentAmount >= this.cart.total){
                         this.paymentMessage = 'Payment Sucessful!'
                         this.message= this.username  + " Paid!"
-                        setTimeout(() => {
-                            this.cart.total = ''
-                        }, 3000);
+                        
                     }else{
                         this.paymentMessage = 'Sorry - that is not enough money!'
                         setTimeout(() => {
@@ -94,7 +99,7 @@ document.addEventListener('alpine:init', () => {
                         }, 3000);
                     }
                 })
-                .catch(err=>alert(err));
+               
             },
       }
   });
