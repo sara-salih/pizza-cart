@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="pizza-cart-api.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script>
+    </script>
+<style>
+body {
+        background-color: aqua;
+    }
+</style>
+</head>
+<body>
+<div class='primCont' x-data="pizzaCartWithAPIWidget">
+      <div x-text='message'></div>
+      <div>
+          <h2 class='header'><em>PIZZA MENU</em></h2>
+          <div class='details'>
+              <div class='customer'>
+                  Customer name: <input type='text' placeholder='User name' x-model='username'>
+              </div>
+              <div class='numP'> Number of pizzas available: <strong x-text='pizzas.length'></strong>
+              </div>
+              <div class='tot'>
+                      Cart total: R <strong x-text="cart.total.toFixed(2)"></strong>
+              </div>
+          </div>
+          <div class="cart">
+              <div >
+                  <table >
+                      <tr>
+                          <th>Flavour</th>
+                          <th>Qty</th>
+                          <th>Add/Remove</th>
+                          <th>Total</th>
+                      </tr>
+                      <template x-for = "pizza in cart.pizzas">
+                          <tr>
+                              <td x-text="pizza.flavour"></td>
+                              <td x-text="pizza.qty"></td>
+                              <td><button class='add/remove' @click="add(pizza)"> + </button>
+                                  <button class='add/remove' @click="remove(pizza)"> - </button>
+                              </td>
+                              <td x-text="pizza.total"></td>
+                          </tr>
+                      </template>
+                      <tr>
+                          <td colspan="3">
+                              <div x-show = "payNow">
+                                  <div class="message" x-text = "paymentMessage"></div>
+                                  <div>
+                                      <label for="input">Payment Amount</label>
+                                      <input class="input" type="number" placeholder="Payment Amount"
+                                          x-model="paymentAmount" width=" 50">
+                                      <button @click="pay" class="btn">
+                                          <img src="./delivery.png" width="20" alt="">
+                                          Pay Now</button>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <button x-show = "!payNow" x-on:click =  "payNow = true" x-show class = "btn">
+                                  <img src = "./delivery.png" width="20" alt = "">
+                                  Pay</button>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+          </div>
+          <br>
+          <div class = 'listPizzas'>
+              <table >
+                  <template x-for="pizza in pizzas">
+                      <tr>
+                          <td>
+                              <img class='pic' x-bind:src="pizzaImage(pizza)">
+                          </td>
+                          <td x-text="pizza.flavour"></td>
+                          <td x-text="pizza.size"></td>
+                          <td x-text="pizza.price"></td>
+                          <td>
+                              <button class='payBtn' x-on:click="add(pizza)">Buy</button>
+                          </td>
+                      </tr>
+                  </template>
+              </table>
+          </div>
+      </div>
+</body>
+</html>
